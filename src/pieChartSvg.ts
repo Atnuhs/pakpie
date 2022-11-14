@@ -9,7 +9,8 @@ interface TaskData {
 class PieChartData {
     constructor(
         private taskName: string,
-        private radianSpans: [start: number, finish: number][]
+        private radianSpans: [start: number, finish: number][],
+        private selected: boolean = false
     ){}
 
     private static strTimeToSec(timeStr: string): number {
@@ -36,6 +37,10 @@ class PieChartData {
         return new PieChartData(taskData.taskName, [this.strTimeSpanToRadianSpan([taskData.startTime, taskData.finishTime])])
     }
 
+    private setPieAttributes() {
+
+    }
+
     taskNameIs(taskName: string): boolean{
         return this.taskName === taskName
     }
@@ -45,7 +50,22 @@ class PieChartData {
         this.radianSpans.push(radianSpan)
     }
 
-    toSvg(center: number, radius: number): [SVGPathElement, SVGTextElement][] {
+    newPieClickHandler(): EventListener{
+
+        return (e: Event) => {
+            const pie = e.target as SVGPathElement
+            if (this.selected) {
+                pie.setAttribute('fill-opacity', '50%')
+                this.selected = false
+            } else {
+                pie.setAttribute('fill-opacity', '80%')
+                this.selected = true
+            }
+            
+        }
+    }
+
+    toSvg(center: number, radius: number, fontSize: number): [SVGPathElement, SVGTextElement][] {
         return this.radianSpans.map(radianSpan => {
             const pie = document.createElementNS("http://www.w3.org/2000/svg", "path")
             const pieText = document.createElementNS("http://www.w3.org/2000/svg", "text")
@@ -65,10 +85,10 @@ class PieChartData {
                 ${fx} ${fy} Z`)
             pie.setAttribute('fill', '#aaa')
             pie.setAttribute('fill-opacity', '50%')
+            pie.onpointerdown = this.newPieClickHandler()
 
             const gx = (center + sx + fx) / 3
             const gy = (center + sy + fy) / 3
-            const fontSize = "center"
             pieText.innerHTML = `${this.taskName}`
             pieText.setAttribute('x', `${gx}`)
             pieText.setAttribute('y', `${gy}`)
@@ -77,9 +97,7 @@ class PieChartData {
             pieText.setAttribute('font-size', `${fontSize}`)
             return [pie, pieText]
         })
-        
     } 
-
 }
 
 class PieChartDatas {
@@ -111,10 +129,10 @@ class PieChartDatas {
         }
     }
 
-    newPieSvgs(center: number, radius: number): [SVGPathElement, SVGTextElement][] {
+    newPieSvgs(center: number, radius: number, fontSize: number): [SVGPathElement, SVGTextElement][] {
         let allSvgs: [SVGPathElement, SVGTextElement][] = []
         this.pies.forEach(pie => {
-            allSvgs.push(...pie.toSvg(center, radius))
+            allSvgs.push(...pie.toSvg(center, radius, fontSize))
         })
         return allSvgs
     }
@@ -147,18 +165,19 @@ const newGraphAxisLabel = (i:number, center: number, axisRadius: number, fontSiz
         return timeText
 }
 
-const newGraphAxis = (i:number, center: number, radius: number): SVGLineElement => {
+const newGraphAxis = (i:number, center: number, radius: number, axisLength: number): SVGLineElement => {
     const axis = document.createElementNS("http://www.w3.org/2000/svg", "line")
     const rad = (i/24)*2*Math.PI
-    const x = Math.sin(rad)*radius + center
-    const y = -Math.cos(rad)*radius + center
+    const x1 = Math.sin(rad)*radius + center
+    const y1 = -Math.cos(rad)*radius + center
+    const x2 = Math.sin(rad)*(radius-axisLength) + center
+    const y2 = -Math.cos(rad)*(radius-axisLength) + center
     
-    axis.setAttribute('x1', `${center}`)
-    axis.setAttribute('y1', `${center}`)
-    axis.setAttribute('x2', `${x}`)
-    axis.setAttribute('y2', `${y}`)
-    axis.setAttribute('stroke', '#aaa4')
-    axis.setAttribute('stroke-dasharray', '10 5')
+    axis.setAttribute('x1', `${x1}`)
+    axis.setAttribute('y1', `${y1}`)
+    axis.setAttribute('x2', `${x2}`)
+    axis.setAttribute('y2', `${y2}`)
+    axis.setAttribute('stroke', '#4444')
     return axis
 }
 
@@ -170,8 +189,10 @@ export const newPieChartDiv = (taskDatas: TaskData[]): HTMLDivElement => {
     const center = size/2
     const radius = center*0.8
     const axisRadius = center*0.88
-    const fontSize = center / 10
-    
+    const fontSizeAxis = center / 10
+    const fontSizeLabel = center / 12
+    const axisLength = radius * 0.1
+
     const pieChartDatas = PieChartDatas.newFromTaskDatas(taskDatas)
 
     pieChartSvg.setAttribute('width', String(size))
@@ -179,11 +200,11 @@ export const newPieChartDiv = (taskDatas: TaskData[]): HTMLDivElement => {
 
 
     for (let i=0; i<24; i++) {
-        pieChartSvg.appendChild(newGraphAxisLabel(i, center, axisRadius, fontSize))
-        pieChartSvg.appendChild(newGraphAxis(i, center, radius))
+        pieChartSvg.appendChild(newGraphAxisLabel(i, center, axisRadius, fontSizeAxis))
+        pieChartSvg.appendChild(newGraphAxis(i, center, radius, axisLength))
     }
 
-    pieChartDatas.newPieSvgs(center, radius).forEach(([pie, pieText]) => {
+    pieChartDatas.newPieSvgs(center, radius, fontSizeLabel).forEach(([pie, pieText]) => {
         pieChartSvg.appendChild(pie)
         pieChartSvg.appendChild(pieText)
     })
@@ -193,5 +214,6 @@ export const newPieChartDiv = (taskDatas: TaskData[]): HTMLDivElement => {
 
     pieChartSvg.appendChild(newGraphCircle(center, radius))
     pieChartDiv.appendChild(pieChartSvg)
+    pieChartDiv.onpointerdown = (e: Event) => {e.preventDefault()}
     return pieChartDiv
 }
