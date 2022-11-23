@@ -47,7 +47,7 @@ const newTimeInputElement = (name: string): HTMLInputElement => {
     })({
         placeholder: "XX:XX",
         pattern: "^[0-9]{1,2}:[0-9]{2}$",
-        // required: "true",
+        required: "true",
         title: "hogehoge",
         name: name,
     });
@@ -59,7 +59,7 @@ const newTaskNameInputElement = (name: string): HTMLInputElement => {
         "font-size": `${size * 0.9}px`,
     })({
         type: "text",
-        // required: "true",
+        required: "true",
         name: name,
     });
 };
@@ -70,7 +70,7 @@ const newColorInputElement = (name: string): HTMLInputElement => {
         height: `${size * 1.2}px`,
     })({
         type: "color",
-        // required: "true",
+        required: "true",
         name: name,
     });
 };
@@ -101,7 +101,7 @@ const newForm = (): HTMLFormElement => {
         "align-items": "flex-start",
         fontSize: `${size}px`,
     })({
-        id: "request-form"
+        id: "request-form",
     });
 };
 

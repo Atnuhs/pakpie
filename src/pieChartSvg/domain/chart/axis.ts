@@ -1,6 +1,5 @@
-import { P } from "@tauri-apps/api/event-2a9960e7";
-import { Attributes, setAttributes } from "./attributes";
-import { Color, Opacity, RGB } from "./color";
+import { setAttributes } from "./attributes";
+import { Color, Opacity } from "./color";
 import { Label } from "./label";
 import { Point } from "./point";
 import { GraphRadius, GraphCenter } from "./scales";

@@ -4,13 +4,13 @@ import { NewPieChartSvgUseCase } from "./pieChartSvg/UseCase/newPieChartSvgUseCa
 
 const registPie = (formElem: HTMLFormElement) => {
     const request = {
-        title: formElem.elements["task-name"].value,
+        title: (formElem.elements[0] as HTMLInputElement).value,
         fontFamily: "sans-serif",
         fontColor: "#222222",
         fontSize: 22,
-        startTime: formElem.elements["start-time"].value,
-        finishTime: formElem.elements["finish-time"].value,
-        pieColor: formElem.elements["color"].value,
+        startTime: (formElem.elements[1] as HTMLInputElement).value,
+        finishTime: (formElem.elements[2] as HTMLInputElement).value,
+        pieColor: (formElem.elements[3] as HTMLInputElement).value,
     };
     const addNewPieUseCase = new AddNewPieUseCase();
     addNewPieUseCase.addNewPie(request);

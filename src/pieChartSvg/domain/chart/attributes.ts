@@ -1,5 +1,3 @@
-import { E } from "@tauri-apps/api/path-e12e0e34";
-
 export type Attributes = {
     [key: string]: string;
 };
