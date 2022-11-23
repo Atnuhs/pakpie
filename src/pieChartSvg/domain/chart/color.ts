@@ -4,7 +4,7 @@ export interface Color {
 }
 
 export class RGB implements Color {
-    private static reg = /^#\d{6}$/;
+    private static reg = /^#?[0-9a-fA-F]{6}$/;
     static readonly defaultBlack = new RGB("#222222");
     static readonly defaultWhite = new RGB("#eeeeee");
     constructor(private colorCode: string) {
@@ -15,7 +15,7 @@ export class RGB implements Color {
         }
     }
     isInvalid(): boolean {
-        return RGB.reg.test(this.colorCode);
+        return !RGB.reg.test(this.colorCode);
     }
 
     toStr(): string {

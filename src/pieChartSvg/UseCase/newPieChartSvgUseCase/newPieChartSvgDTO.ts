@@ -1,3 +1,3 @@
-export interface newPieChartSvgResponseDTO {
+export interface NewPieChartSvgResponseDTO {
     svg: SVGElement;
 }

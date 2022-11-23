@@ -1,3 +1,4 @@
+import { setAttributes } from "./attributes";
 import { Color, Opacity } from "./color";
 import { Point } from "./point";
 import { Size } from "./size";
@@ -25,14 +26,19 @@ export class Label {
         };
     }
 
-    svgText(): SVGTextElement {
-        const svgText = document.createElementNS(
+    private genSVGTextElement(innerHTML: string): SVGTextElement {
+        const element = document.createElementNS(
             "http://www.w3.org/2000/svg",
             "text"
         );
-        svgText.innerHTML = this.innerHTML;
-        Object.assign(svgText, this.textAttributes());
-        return svgText;
+        element.innerHTML = innerHTML;
+        return element;
+    }
+
+    svgText(): SVGTextElement {
+        return setAttributes(this.genSVGTextElement(this.innerHTML))(
+            this.textAttributes()
+        );
     }
 
     scale(scale: number) {

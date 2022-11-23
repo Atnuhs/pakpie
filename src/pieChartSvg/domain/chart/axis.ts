@@ -1,17 +1,10 @@
+import { P } from "@tauri-apps/api/event-2a9960e7";
+import { Attributes, setAttributes } from "./attributes";
 import { Color, Opacity, RGB } from "./color";
 import { Label } from "./label";
 import { Point } from "./point";
 import { GraphRadius, GraphCenter } from "./scales";
 import { Size } from "./size";
-
-type AxisElement = SVGCircleElement | SVGLineElement | SVGTextElement;
-
-interface LabelAttr {
-    radius: Size;
-    fontSize: Size;
-    fontFamily: string;
-    fontColor: Color;
-}
 
 export class Axis {
     constructor(
@@ -29,20 +22,17 @@ export class Axis {
     ) {}
 
     private newAxisCircleSVG(): SVGCircleElement {
-        const axisCircle = document.createElementNS(
-            "http://www.w3.org/2000/svg",
-            "circle"
-        );
         const { x: cx, y: cy } = this.center.xyPx();
-        Object.assign(axisCircle, {
+        return setAttributes(
+            document.createElementNS("http://www.w3.org/2000/svg", "circle")
+        )({
             cx: cx,
             cy: cy,
             r: this.radius.px(),
             fill: "None",
             stroke: this.color.toStr(),
-            "fill-opacity": this.opacity.toStr(),
+            "stroke-opacity": this.opacity.toStr(),
         });
-        return axisCircle;
     }
 
     private originMajorTickRootPoint(): Point {
@@ -73,20 +63,17 @@ export class Axis {
             rad
         );
 
-        const majorTick = document.createElementNS(
-            "http://www.w3.org/2000/svg",
-            "line"
-        );
-
-        Object.assign(majorTick, {
+        return setAttributes(
+            document.createElementNS("http://www.w3.org/2000/svg", "line")
+        )({
             x1: rootTickPoint.xyPx().x,
             y1: rootTickPoint.xyPx().y,
             x2: tipTickPoint.xyPx().x,
-            y2: tipTickPoint.xyPx().x,
+            y2: tipTickPoint.xyPx().y,
             stroke: this.color.toStr(),
             "stroke-width": this.width.px(),
+            "stroke-opacity": this.opacity.toStr(),
         });
-        return majorTick;
     }
 
     private newMajorTickLabelSVG(i: number, rad: number): SVGTextElement {
@@ -105,8 +92,8 @@ export class Axis {
         return label.svgText();
     }
 
-    public axisElements(): AxisElement[] {
-        const axisElements: AxisElement[] = [this.newAxisCircleSVG()];
+    public axisElements(): SVGElement[] {
+        const axisElements: SVGElement[] = [this.newAxisCircleSVG()];
         for (let i = 0; i < 24; i++) {
             const rad = (i / 24) * 2 * Math.PI;
             axisElements.push(this.newMajorTickSVG(rad));

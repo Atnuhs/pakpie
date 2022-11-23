@@ -1,4 +1,4 @@
-import { Px, Size } from "./size";
+import { Px } from "./size";
 
 export class Point {
     private x: Px;

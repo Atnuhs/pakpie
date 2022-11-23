@@ -1,23 +1,19 @@
 import {
     PieChartRepositoryInterface,
     PieChartSvg,
-} from "../domain/pieChartSvg";
+} from "../domain/chart/pieChartSvg";
+let pieChart: PieChartSvg | null = null;
 
 export class PieChartOnMemoryRepository implements PieChartRepositoryInterface {
-    private pieChart: PieChartSvg | null;
-    constructor() {
-        this.pieChart = null;
-    }
-
     save(graph: PieChartSvg): void {
-        this.pieChart = graph;
+        pieChart = graph;
     }
 
     load(): PieChartSvg {
-        return this.pieChart as PieChartSvg;
+        return pieChart as PieChartSvg;
     }
 
     isSaved(): boolean {
-        return this.pieChart instanceof PieChartSvg;
+        return pieChart instanceof PieChartSvg;
     }
 }

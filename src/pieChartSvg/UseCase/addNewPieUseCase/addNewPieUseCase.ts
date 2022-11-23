@@ -1,15 +1,15 @@
 import { PieChartSvg } from "../../domain/chart/pieChartSvg";
 import { PieChartOnMemoryRepository } from "../../repository/pieChartOnMemoryRepository";
-import { NewPieChartSvgResponseDTO } from "./newPieChartSvgDTO";
+import { AddNewPieRequestDTO } from "./addNewPieDTO";
 
-export class NewPieChartSvgUseCase {
+export class AddNewPieUseCase {
     private pieChartOnMemoryRepository = new PieChartOnMemoryRepository();
-    getPieChartSvg(): NewPieChartSvgResponseDTO {
+    addNewPie(req: AddNewPieRequestDTO): void {
         const pieChart = this.pieChartOnMemoryRepository.isSaved()
             ? this.pieChartOnMemoryRepository.load()
             : new PieChartSvg();
-        return {
-            svg: pieChart.svg(),
-        };
+
+        pieChart.pushPie(req);
+        this.pieChartOnMemoryRepository.save(pieChart);
     }
 }
