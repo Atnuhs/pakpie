@@ -1,6 +1,6 @@
-import { AddNewPieUseCase } from "./pieChartSvg/UseCase/addNewPieUseCase/addNewPieUseCase";
-import { NewFormUseCase } from "./pieChartSvg/UseCase/newFormUseCase/newFormUseCase";
-import { NewPieChartSvgUseCase } from "./pieChartSvg/UseCase/newPieChartSvgUseCase/newPieChartSvgUseCase";
+import { AddNewPieUseCase } from "../../pieChartSvg/UseCase/addNewPieUseCase/addNewPieUseCase";
+import { NewPieChartSvgUseCase } from "../../pieChartSvg/UseCase/newPieChartSvgUseCase/newPieChartSvgUseCase";
+import { constructForm } from "./form/form";
 
 const registPie = (formElem: HTMLFormElement) => {
     const request = {
@@ -38,11 +38,6 @@ const resultDiv = (): HTMLDivElement => {
     return resultDiv;
 };
 
-const requestForm = (): HTMLFormElement => {
-    const newFormUseCase = new NewFormUseCase();
-    return newFormUseCase.getForm();
-};
-
 const newContainer = (): HTMLDivElement => {
     const container = document.createElement("div");
 
@@ -54,7 +49,7 @@ const newContainer = (): HTMLDivElement => {
 
 const init = () => {
     const container = newContainer();
-    container.appendChild(requestForm());
+    container.appendChild(constructForm());
     container.appendChild(resultDiv());
     document.body.appendChild(container);
 
