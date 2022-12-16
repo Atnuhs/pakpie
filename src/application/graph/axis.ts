@@ -1,4 +1,4 @@
-import { setAttributes } from "./attributes";
+import { setSVGAttributes } from "./attributes";
 import { Color, Opacity } from "./color";
 import { Label } from "./label";
 import { Point } from "./point";
@@ -22,7 +22,7 @@ export class Axis {
 
     private newAxisCircleSVG(): SVGCircleElement {
         const { x: cx, y: cy } = this.center.xyPx();
-        return setAttributes(
+        return setSVGAttributes(
             document.createElementNS("http://www.w3.org/2000/svg", "circle")
         )({
             cx: cx,
@@ -62,7 +62,7 @@ export class Axis {
             rad
         );
 
-        return setAttributes(
+        return setSVGAttributes(
             document.createElementNS("http://www.w3.org/2000/svg", "line")
         )({
             x1: rootTickPoint.xyPx().x,

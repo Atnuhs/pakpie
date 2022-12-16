@@ -1,4 +1,4 @@
-import { setAttributes } from "./attributes";
+import { setSVGAttributes } from "./attributes";
 import { Color, Opacity } from "./color";
 import { Point } from "./point";
 import { Size } from "./size";
@@ -36,7 +36,7 @@ export class Label {
     }
 
     svgText(): SVGTextElement {
-        return setAttributes(this.genSVGTextElement(this.innerHTML))(
+        return setSVGAttributes(this.genSVGTextElement(this.innerHTML))(
             this.textAttributes()
         );
     }

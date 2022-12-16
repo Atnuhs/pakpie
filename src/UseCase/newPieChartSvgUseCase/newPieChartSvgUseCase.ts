@@ -1,4 +1,4 @@
-import { PieChartSvg } from "../../domain/chart/pieChartSvg";
+import { PieChartSvg } from "../../../domain/chart/pieChartSvg";
 import { PieChartOnMemoryRepository } from "../../repository/pieChartOnMemoryRepository";
 import { NewPieChartSvgResponseDTO } from "./newPieChartSvgDTO";
 

@@ -1,5 +1,5 @@
-import { AddNewPieUseCase } from "../../pieChartSvg/UseCase/addNewPieUseCase/addNewPieUseCase";
-import { NewPieChartSvgUseCase } from "../../pieChartSvg/UseCase/newPieChartSvgUseCase/newPieChartSvgUseCase";
+import { AddNewPieUseCase } from "../UseCase/addNewPieUseCase/addNewPieUseCase";
+import { NewPieChartSvgUseCase } from "../UseCase/newPieChartSvgUseCase/newPieChartSvgUseCase";
 import { constructForm } from "./form/form";
 
 const registPie = (formElem: HTMLFormElement) => {

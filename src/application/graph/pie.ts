@@ -1,5 +1,5 @@
 import { AddNewPieRequestDTO } from "../../UseCase/addNewPieUseCase/addNewPieDTO";
-import { setAttributes } from "./attributes";
+import { setSVGAttributes } from "../lib/DOMHelper";
 import { Color, Opacity, RGB } from "./color";
 import { Label } from "./label";
 import { Point } from "./point";
@@ -114,20 +114,20 @@ export class Pie {
     pieElements(): SVGElement[] {
         return [
             this.isCircled()
-                ? setAttributes(
+                ? setSVGAttributes(
                       document.createElementNS(
                           "http://www.w3.org/2000/svg",
                           "circle"
                       )
                   )(this.circleAttributes())
-                : setAttributes(
+                : setSVGAttributes(
                       document.createElementNS(
                           "http://www.w3.org/2000/svg",
                           "path"
                       )
                   )(this.pieAttributes()),
             [this.label.svgText()].map((svg) =>
-                setAttributes(svg)({
+                setSVGAttributes(svg)({
                     "font-weight": "700",
                     stroke: "#eeeeee",
                     "stroke-width": "1px",

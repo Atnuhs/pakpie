@@ -1,5 +1,5 @@
 import { AddNewPieRequestDTO } from "../../UseCase/addNewPieUseCase/addNewPieDTO";
-import { setAttributes } from "./attributes";
+import { setSVGAttributes } from "../lib/DOMHelper";
 import { Axis } from "./axis";
 import { Color, Opacity, RGB } from "./color";
 import { Pie } from "./pie";
@@ -101,11 +101,11 @@ export class PieChartSvg {
     }
 
     svg(): SVGElement {
-        const svg = setAttributes(
+        const svg = setSVGAttributes(
             document.createElementNS("http://www.w3.org/2000/svg", "svg")
         )(this.svgAttributes());
 
-        const rect = setAttributes(
+        const rect = setSVGAttributes(
             document.createElementNS("http://www.w3.org/2000/svg", "rect")
         )(this.svgRectAttributes());
 
