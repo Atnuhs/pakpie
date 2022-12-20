@@ -1,7 +1,7 @@
-import { Length } from "./length";
-import { Point } from "./point";
-import { PiePointCalculator } from "./pointCalculator";
-import { Ratio } from "./ratio";
+import { Length } from "../length";
+import { Point } from "../point";
+import { PiePointCalculator } from "../pointCalculator";
+import { Ratio } from "../ratio";
 
 describe("PiePointCalculator.calcPoint()は", () => {
     const o = new Point(250, 250);

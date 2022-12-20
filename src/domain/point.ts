@@ -2,7 +2,7 @@ import { Length } from "./length";
 import { Rad } from "./rad";
 
 export class Point {
-    constructor(private x: number, private y: number) {}
+    constructor(public readonly x: number, public readonly y: number) {}
 
     public Xplus(l: Length) {
         return new Point(this.x + l.value, this.y);

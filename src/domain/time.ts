@@ -1,3 +1,5 @@
+import { Ratio } from "./ratio";
+
 export class Time {
     hour: number;
     minute: number;
@@ -26,8 +28,8 @@ export class Time {
         return this.hour === time.hour && this.minute === time.minute;
     }
 
-    public reduce(): number {
-        return this.getHours() / 24;
+    public reduce(): Ratio {
+        return new Ratio(this.getHours() / 24);
     }
 
     public getStr(): string {

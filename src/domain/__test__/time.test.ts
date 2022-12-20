@@ -1,4 +1,5 @@
-import { Time } from "./time";
+import { Ratio } from "../ratio";
+import { Time } from "../time";
 
 describe("Time.fromStr()は", () => {
     test("/^\\d{1,2}:\\d{2}$/ 以外の形式で値を与えられるとRangeErrorを投げる", () => {
@@ -16,10 +17,10 @@ describe("Time.fromStr()は", () => {
 
 describe("time.reduce()は", () => {
     test("12:00の割合は0.5", () => {
-        expect(Time.fromStr("12:00").reduce()).toEqual(0.5);
+        expect(Time.fromStr("12:00").reduce()).toEqual(new Ratio(0.5));
     });
     test("4:30の割合は4.5/24", () => {
-        expect(Time.fromStr("4:30").reduce()).toEqual(4.5 / 24);
+        expect(Time.fromStr("4:30").reduce()).toEqual(new Ratio(4.5 / 24));
     });
 });
 

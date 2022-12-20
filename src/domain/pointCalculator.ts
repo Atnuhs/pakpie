@@ -3,7 +3,7 @@ import { Point } from "./point";
 import { Rad } from "./rad";
 import { Ratio } from "./ratio";
 
-export interface PiePoint {
+export interface PiePoints {
     o: Point;
     s: Point;
     f: Point;
@@ -25,7 +25,7 @@ export class PiePointCalculator {
         return vector.rotate(rad).plus(this.o);
     }
 
-    public calc(startRatio: Ratio, finishRatio: Ratio): PiePoint {
+    public calc(startRatio: Ratio, finishRatio: Ratio): PiePoints {
         const vector = this.startPoint().minus(this.o);
         return {
             o: this.o.copy(),
