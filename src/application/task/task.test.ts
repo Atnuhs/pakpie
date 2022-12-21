@@ -5,20 +5,70 @@ const closeTo = (p: PieChartPoint): PieChartPoint => {
 };
 
 describe("Task.getPie()は", () => {
-    const task = Task.new({
-        label: "睡眠",
-        startTime: "0:00",
-        finishTime: "12:00",
-    });
+    interface TestData {
+        task: Task;
+        o: PieChartPoint;
+        r: PieChartLength;
+        expected: {
+            o: PieChartPoint;
+            s: PieChartPoint;
+            f: PieChartPoint;
+            g: PieChartPoint;
+        };
+    }
     const o: PieChartPoint = { x: 250, y: 250 };
     const r: PieChartLength = { value: 200 };
+    const testData: TestData[] = [
+        {
+            task: Task.new({
+                label: "睡眠",
+                startTime: "0:00",
+                finishTime: "12:00",
+            }),
+            o: o,
+            r: r,
+            expected: {
+                o: closeTo(o),
+                s: closeTo({ x: o.x, y: o.y - r.value }),
+                f: closeTo({ x: o.x, y: o.y + r.value }),
+                g: closeTo({ x: o.x + r.value / 2, y: o.y }),
+            },
+        },
+        {
+            task: Task.new({
+                label: "睡眠",
+                startTime: "12:00",
+                finishTime: "0:00",
+            }),
+            o: o,
+            r: r,
+            expected: {
+                o: closeTo(o),
+                s: closeTo({ x: o.x, y: o.y + r.value }),
+                f: closeTo({ x: o.x, y: o.y - r.value }),
+                g: closeTo({ x: o.x - r.value / 2, y: o.y }),
+            },
+        },
+        {
+            task: Task.new({
+                label: "睡眠",
+                startTime: "18:00",
+                finishTime: "6:00",
+            }),
+            o: o,
+            r: r,
+            expected: {
+                o: closeTo(o),
+                s: closeTo({ x: o.x - r.value, y: o.y }),
+                f: closeTo({ x: o.x + r.value, y: o.y }),
+                g: closeTo({ x: o.x, y: o.y - r.value / 2 }),
+            },
+        },
+    ];
 
-    test("(o, r)から(o, s, f, g)を返す", () => {
-        expect(task.getPie(o, r)).toEqual({
-            o: closeTo(o),
-            s: closeTo({ x: o.x, y: o.y - r.value }),
-            f: closeTo({ x: o.x, y: o.y + r.value }),
-            g: closeTo({ x: o.x + r.value / 2, y: o.y }),
-        });
+    test.each(testData)("(o, r)から(o, s, f, g)を返す", (testData) => {
+        expect(testData.task.getPie(testData.o, testData.r)).toEqual(
+            testData.expected
+        );
     });
 });

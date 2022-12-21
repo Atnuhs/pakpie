@@ -13,10 +13,6 @@ export interface PiePoints {
 export class PiePointCalculator {
     constructor(private o: Point, private r: Length) {}
 
-    private ratioToRad(ratio: Ratio): Rad {
-        return Rad.fromRatio(ratio);
-    }
-
     private startPoint(): Point {
         return this.o.Yminus(this.r);
     }
@@ -27,14 +23,14 @@ export class PiePointCalculator {
 
     public calc(startRatio: Ratio, finishRatio: Ratio): PiePoints {
         const vector = this.startPoint().minus(this.o);
+        const startRad = Rad.fromRatio(startRatio);
+        const finishRad = Rad.fromRatio(finishRatio);
+        const middleRad = Rad.middleRad(startRad, finishRad);
         return {
             o: this.o.copy(),
-            s: this.rotate(vector, this.ratioToRad(startRatio)),
-            f: this.rotate(vector, this.ratioToRad(finishRatio)),
-            g: this.rotate(
-                vector.half(),
-                this.ratioToRad(startRatio.plus(finishRatio).half())
-            ),
+            s: this.rotate(vector, startRad),
+            f: this.rotate(vector, finishRad),
+            g: this.rotate(vector.half(), middleRad),
         };
     }
 }

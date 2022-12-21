@@ -25,14 +25,19 @@ export interface PieChartPiePoints {
     readonly g: PieChartPoint;
 }
 
-export class Task implements TaskData {
+export class Task {
     public static new(data: TaskData): Task {
-        return new Task(data.label, data.startTime, data.finishTime);
+        const startTime = Time.startTime(data.startTime);
+        return new Task(
+            data.label,
+            Time.startTime(data.startTime),
+            Time.finishTime(data.finishTime, startTime)
+        );
     }
     constructor(
         public readonly label: string,
-        public readonly startTime: string,
-        public readonly finishTime: string
+        private readonly startTime: Time,
+        private readonly finishTime: Time
     ) {}
 
     getPie(o: PieChartPoint, r: PieChartLength): PieChartPiePoints {
@@ -41,8 +46,8 @@ export class Task implements TaskData {
             new Length(r.value)
         );
         const p = calculator.calc(
-            Time.fromStr(this.startTime).reduce(),
-            Time.fromStr(this.finishTime).reduce()
+            this.startTime.reduce(),
+            this.finishTime.reduce()
         );
         return {
             o: p.o,

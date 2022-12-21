@@ -1,7 +1,10 @@
 import { Ratio } from "./ratio";
 
 export class Length {
-    constructor(public value: number) {}
+    public readonly value;
+    constructor(value: number) {
+        this.value = Math.round(value * 1000000) / 1000000;
+    }
 
     public half(): Length {
         return new Length(this.value / 2);
