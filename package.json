@@ -11,7 +11,8 @@
         "test": "jest"
     },
     "dependencies": {
-        "@tauri-apps/api": "^1.1.0"
+        "@tauri-apps/api": "^1.1.0",
+        "canvg": "^4.0.1"
     },
     "devDependencies": {
         "@tauri-apps/cli": "^1.2.0",

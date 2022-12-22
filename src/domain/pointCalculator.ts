@@ -8,6 +8,7 @@ export interface PiePoints {
     s: Point;
     f: Point;
     g: Point;
+    largeArcSweepFlag: number;
 }
 
 export class PiePointCalculator {
@@ -31,6 +32,7 @@ export class PiePointCalculator {
             s: this.rotate(vector, startRad),
             f: this.rotate(vector, finishRad),
             g: this.rotate(vector.half(), middleRad),
+            largeArcSweepFlag: Rad.largeArcSweepFlag(startRad, finishRad),
         };
     }
 }

@@ -67,7 +67,7 @@ describe("Task.getPie()は", () => {
     ];
 
     test.each(testData)("(o, r)から(o, s, f, g)を返す", (testData) => {
-        expect(testData.task.getPie(testData.o, testData.r)).toEqual(
+        expect(testData.task.getPieData(testData.o, testData.r)).toEqual(
             testData.expected
         );
     });

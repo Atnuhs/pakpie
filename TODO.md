@@ -10,7 +10,7 @@
   - [x] "new Ratio()"はvalueを1で割ったあまりとする。
 - PiePointCalculator
   - [x] PiePointを返す
-  - [x] 点G、半径R、StartRatio、 FinishRatioを与えると、点S、点F、点Gを返す
+  - [x] 点G、半径R、StartRatio、 FinishRatioを与えると、円弧のAttributeを返す。
 - Task
   - [x] {label: "testTask", startTime: "0:00", finishTime: "12:00"}という入力から
 - PieChart(Visualizer)

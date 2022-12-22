@@ -15,7 +15,7 @@ export class Rad {
 
     public static largeArcSweepFlag(from: Rad, to: Rad): number {
         const toValue = from.lt(to) ? to.rad : to.plusFull().rad;
-        return toValue - from.rad < Math.PI ? 0 : 1;
+        return toValue - from.rad <= Math.PI ? 0 : 1;
     }
 
     constructor(radNum: number) {
