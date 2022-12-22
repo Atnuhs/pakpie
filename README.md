@@ -1,7 +1,11 @@
-# Tauri + Vanilla TS
+# まだ使いにくいと思うので、言ってもらえればなおすよお
 
-This template should help get you started developing with Tauri in vanilla HTML, CSS and Typescript.
+以上です。
 
-## Recommended IDE Setup
+```mermaid
+graph TD
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+a --> b
+
+
+```
