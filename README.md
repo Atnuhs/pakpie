@@ -4,10 +4,3 @@
 
 以上です。
 
-```mermaid
-graph TD
-
-a --> b
-
-
-```
