@@ -2,7 +2,7 @@ import { setHTMLAttributes, setSVGAttributes } from "../lib/DOMHelper";
 import { PieChartLength, PieChartPieData, PieChartPoint } from "../task/task";
 
 export const lineColor = "#222222";
-export const fillColor = "#eeeeee";
+export const fillColor = "#ffffff";
 export const fillColorFocused = "#e65278";
 export const lineWidth = 2;
 export const opacity = 80;
@@ -12,7 +12,7 @@ export const rSize = 200;
 export const axisLength = 10;
 export const rLabelSize = 220;
 export const oSize = svgSize / 2;
-export const fontSize = 24;
+export const fontSize = 25;
 export const fontFamily = "sans-serif";
 export const hoursInDay = 24;
 
@@ -38,6 +38,8 @@ export const text = (label: string, g: PieChartPoint) => {
         "fill-opacity": toPercent(opacity),
     });
     t.innerHTML = label;
+    t.onmouseover = (e) => e.preventDefault();
+    t.onmouseleave = (e) => e.preventDefault();
     return t;
 };
 
@@ -102,12 +104,18 @@ export const rect = (): SVGRectElement => {
     return r;
 };
 
-export const button = (label: string): HTMLButtonElement =>
-    setHTMLAttributes(document.createElement("button"))(label)({
+export const button = (label: string): HTMLButtonElement => {
+    const b = setHTMLAttributes(document.createElement("button"))(label)({
         "font-size": toPx(fontSize),
-        "background-color": "#a482a9",
+        "background-color": "#779eeb",
         "border-radius": "8px",
     })({});
+    b.onpointerover = () => (b.style.opacity = "80%");
+    b.onpointerleave = () => (b.style.opacity = "100%");
+    b.onpointerdown = () => (b.style.opacity = "60%");
+    b.onpointerup = () => (b.style.opacity = "80%");
+    return b;
+};
 
 export const pie = (data: PieChartPieData): SVGPathElement => {
     const p = setSVGAttributes(
@@ -116,7 +124,7 @@ export const pie = (data: PieChartPieData): SVGPathElement => {
         d: `M ${data.o.x} ${data.o.y} L ${data.s.x} ${data.s.y} A ${data.r.value} ${data.r.value} 0 ${data.largeArcSweepFlag} 1 ${data.f.x} ${data.f.y}`,
         fill: data.color,
         "fill-opacity": toPercent(opacity),
-        cursor: "crosshair",
+        cursor: "pointer",
     });
     p.onpointerover = (e) => {
         e.preventDefault();

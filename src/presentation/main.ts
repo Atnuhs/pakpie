@@ -11,6 +11,7 @@ const newContainer = (): HTMLDivElement =>
     })({});
 
 const init = () => {
+    document.onselectstart = () => false;
     const container = newContainer();
     const visualizer = new PieChartSvg();
     container.appendChild(formDiv());

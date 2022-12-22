@@ -3,8 +3,8 @@ import { button } from "./atoms";
 import { Canvg } from "canvg";
 import { setHTMLAttributes } from "../lib/DOMHelper";
 
-const border = "solid 2px #eee";
-const boxShadow = "4px 4px 10px -2px";
+const border = "solid 2px #f9f9f9";
+const boxShadow = "5px 5px 20px #aaa";
 
 const svgToCanvas = (svg: SVGElement): HTMLCanvasElement => {
     const canvas = document.createElement("canvas");
@@ -34,7 +34,9 @@ const saveImageEvent = (canvas: HTMLCanvasElement, filename: string) => {
 const divTemplate = () =>
     setHTMLAttributes(document.createElement("div"))("")({
         border: border,
-        boxShadow: boxShadow,
+        "box-shadow": boxShadow,
+        padding: "10px",
+        "background-color": "#fafafa"
     });
 
 export const resultDiv = (svg: SVGElement): HTMLDivElement => {
@@ -43,7 +45,6 @@ export const resultDiv = (svg: SVGElement): HTMLDivElement => {
     const b = button("Save");
     b.onclick = saveImageEvent(canvas, "pieChart.png");
     resultDiv.appendChild(svg);
-    resultDiv.appendChild(canvas);
     resultDiv.appendChild(b);
     return resultDiv;
 };

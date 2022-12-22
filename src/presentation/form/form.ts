@@ -10,9 +10,9 @@ import {
 
 export const genForm = () =>
     appendChilds(form())(
-        appendChilds(label("Task Name:"))(labelInput("task-name")),
-        appendChilds(label("Start Time:"))(timeInput("start-time")),
-        appendChilds(label("Finish Time:"))(timeInput("finish-time")),
-        appendChilds(label("Color:"))(colorInput("color")),
+        appendChilds(label("Title"))(labelInput("task-name")),
+        appendChilds(label("Start"))(timeInput("start-time")),
+        appendChilds(label("Finish"))(timeInput("finish-time")),
+        appendChilds(label("Color"))(colorInput("color")),
         submitButton()
     );

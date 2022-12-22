@@ -3,7 +3,7 @@ import { oSize, pie, rect, rSize, svg, text } from "./atoms";
 import { frame } from "./moleculers";
 
 export class PieChartSvg {
-    private tasks: Task[] = [Task.new({label: "test", startTime: "0:00", finishTime: "12:00", color: "#ef2"})];
+    private tasks: Task[] = [];
     svg(): SVGElement {
         const s = svg();
         const o = { x: oSize, y: oSize };
